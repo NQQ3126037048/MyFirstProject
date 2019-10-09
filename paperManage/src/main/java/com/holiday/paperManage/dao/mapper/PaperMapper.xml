@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.holiday.paperManage.dao.PaperDao">
+
+    <select id="listTpaperPage" resultType="com.holiday.paperManage.entity.TpaperDTO">
+        SELECT *,
+        CEILING((SELECT COUNT(1) FROM t_paper
+        WHERE title LIKE '%${title}%'
+        <if test="type!=0">
+          AND `type` = #{type}
+        </if>
+        )/#{page.pageNum}) totalPageNum,
+        #{page.pageIndex} pageindex,#{page.pageNum} pagenum
+        FROM t_paper
+        WHERE title LIKE '%${title}%'
+        <if test="type!=0">
+            AND `type` = #{type}
+        </if>
+        LIMIT #{page.skipNum},#{page.pageNum}
+    </select>
+
+    <select id="listTcodeByPaper" resultType="com.holiday.paperManage.entity.TcodeDTO">
+        SELECT * FROM t_code WHERE codeTypeName='paperType'
+    </select>
+</mapper>
