@@ -79,6 +79,8 @@ public class PaperController {
             paper = paperList.get(0);
         } catch (ArrayIndexOutOfBoundsException e) {
             //查询集合中无数据为分页对象赋值为0
+
+
             paper = new TpaperDTO();
             paper.setTotalPageNum(0);
             paper.setPageIndex(0);
